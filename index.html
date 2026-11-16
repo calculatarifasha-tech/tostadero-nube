@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tostadero Nube · Café de especialidad en Granada</title>
+  <meta name="description" content="Café de especialidad tostado en Granada. Desayunos, brunch y café para llevar.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f2ea;
+      --surface: #fffaf3;
+      --ink: #2b1f17;
+      --muted: #6f5f52;
+      --accent: #b5562b;
+      --accent-dark: #8f4020;
+      --line: #e6dccd;
+      --radius: 18px;
+      --max: 1120px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3 { font-family: "Fraunces", Georgia, serif; line-height: 1.15; font-weight: 700; }
+    .wrap { width: min(var(--max), 100% - 32px); margin-inline: auto; }
+
+    /* Nav */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo { font-family: "Fraunces", serif; font-size: 1.35rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    .logo svg { width: 28px; height: 28px; color: var(--accent); }
+    .nav ul { display: flex; gap: 28px; list-style: none; font-weight: 500; font-size: .95rem; }
+    .nav ul a:hover { color: var(--accent); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 22px; border-radius: 999px; font-weight: 600; font-size: .95rem;
+      background: var(--accent); color: #fff; border: 2px solid var(--accent);
+      transition: background .2s, transform .2s;
+    }
+    .btn:hover { background: var(--accent-dark); border-color: var(--accent-dark); transform: translateY(-1px); }
+    .btn.ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
+    .btn.ghost:hover { background: var(--ink); color: var(--bg); }
+    .menu-toggle { display: none; background: none; border: 0; cursor: pointer; color: var(--ink); }
+
+    /* Hero */
+    .hero { padding: 72px 0 88px; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; }
+    .eyebrow { display: inline-block; font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+    .hero h1 { font-size: clamp(2.4rem, 5vw, 4rem); margin-bottom: 20px; }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero p { font-size: 1.12rem; color: var(--muted); max-width: 30rem; margin-bottom: 32px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-art {
+      aspect-ratio: 4/5; border-radius: 28px; overflow: hidden; position: relative;
+      background:
+        radial-gradient(circle at 30% 25%, #e9b98f 0 12%, transparent 13%),
+        radial-gradient(circle at 70% 65%, #6b3a22 0 22%, transparent 23%),
+        linear-gradient(160deg, #d98b5a, #7a3e21);
+      box-shadow: 0 30px 60px -30px rgba(43,31,23,.45);
+    }
+    .cup { position: absolute; inset: 0; display: grid; place-items: center; }
+    .cup svg { width: 62%; color: #fffaf3; filter: drop-shadow(0 10px 20px rgba(0,0,0,.25)); }
+    .badge {
+      position: absolute; left: 20px; bottom: 24px;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+      padding: 14px 18px; display: flex; gap: 12px; align-items: center;
+      box-shadow: 0 18px 30px -18px rgba(43,31,23,.35);
+    }
+    .badge strong { font-family: "Fraunces", serif; font-size: 1.6rem; color: var(--accent); }
+    .badge span { font-size: .85rem; color: var(--muted); line-height: 1.3; }
+
+    /* Sections */
+    section { padding: 88px 0; }
+    .section-head { text-align: center; max-width: 36rem; margin: 0 auto 52px; }
+    .section-head h2 { font-size: clamp(1.9rem, 3.5vw, 2.6rem); margin-bottom: 12px; }
+    .section-head p { color: var(--muted); }
+
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px; }
+    .card .icon { width: 48px; height: 48px; border-radius: 14px; background: #f3e1d2; color: var(--accent); display: grid; place-items: center; margin-bottom: 18px; }
+    .card .icon svg { width: 24px; height: 24px; }
+    .card h3 { font-size: 1.25rem; margin-bottom: 8px; }
+    .card p { color: var(--muted); font-size: .97rem; }
+
+    /* Menu */
+    #carta { background: var(--ink); color: var(--bg); }
+    #carta .section-head p { color: #c9b9a8; }
+    .tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 36px; flex-wrap: wrap; }
+    .tab {
+      padding: 10px 20px; border-radius: 999px; border: 1px solid #5a4637; background: transparent;
+      color: #e8dccd; font: inherit; font-weight: 500; cursor: pointer; transition: all .2s;
+    }
+    .tab[aria-selected="true"], .tab:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .menu-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 56px; max-width: 880px; margin: 0 auto; }
+    .menu-list[hidden] { display: none; }
+    .item { display: flex; align-items: baseline; gap: 12px; padding: 16px 0; border-bottom: 1px dashed #4a3a2e; }
+    .item div { flex: 1; }
+    .item h4 { font-size: 1.05rem; font-weight: 600; }
+    .item p { font-size: .88rem; color: #b9a896; }
+    .item .price { font-family: "Fraunces", serif; font-size: 1.15rem; color: #f0b48a; white-space: nowrap; }
+
+    /* Reviews */
+    .reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .review .stars { color: var(--accent); letter-spacing: 2px; margin-bottom: 12px; }
+    .review blockquote { font-size: 1.02rem; margin-bottom: 18px; }
+    .review cite { font-style: normal; font-weight: 600; font-size: .9rem; color: var(--muted); }
+
+    /* Visit */
+    .visit { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .hours { list-style: none; }
+    .hours li { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .hours li:last-child { border-bottom: 0; }
+    .map {
+      border-radius: var(--radius); min-height: 280px; border: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, transparent 48%, #e6dccd 48% 52%, transparent 52%),
+        linear-gradient(0deg, transparent 58%, #e6dccd 58% 62%, transparent 62%),
+        linear-gradient(35deg, transparent 30%, #efe6d8 30% 33%, transparent 33%),
+        #f3ece1;
+      position: relative;
+    }
+    .pin { position: absolute; left: 50%; top: 45%; transform: translate(-50%, -100%); color: var(--accent); }
+    .pin svg { width: 44px; height: 44px; }
+
+    /* Form */
+    form { display: grid; gap: 14px; margin-top: 8px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    label { font-size: .85rem; font-weight: 600; display: grid; gap: 6px; }
+    input, select {
+      font: inherit; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line);
+      background: #fff; color: var(--ink);
+    }
+    input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+    .form-msg { font-size: .9rem; color: #2f7a3e; min-height: 1.4em; }
+
+    footer { border-top: 1px solid var(--line); padding: 36px 0; font-size: .88rem; color: var(--muted); }
+    .foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .demo-note { margin-top: 12px; font-size: .8rem; opacity: .8; }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-grid, .visit { grid-template-columns: 1fr; }
+      .hero-art { max-width: 420px; aspect-ratio: 1; }
+      .features, .reviews { grid-template-columns: 1fr; }
+      .menu-list { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .nav ul, .nav .btn { display: none; }
+      .menu-toggle { display: block; }
+      .nav.open ul {
+        display: flex; flex-direction: column; gap: 0; position: absolute; top: 68px; left: 0; right: 0;
+        background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px 16px 16px;
+      }
+      .nav.open ul a { display: block; padding: 12px 0; }
+      .row { grid-template-columns: 1fr; }
+      .badge { left: 12px; }
+      section { padding: 64px 0; }
+      .hero { padding: 40px 0 64px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap nav" id="nav">
+    <a href="#" class="logo" aria-label="Tostadero Nube, inicio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></svg>
+      Tostadero Nube
+    </a>
+    <ul>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#carta">Carta</a></li>
+      <li><a href="#opiniones">Opiniones</a></li>
+      <li><a href="#visitanos">Visítanos</a></li>
+    </ul>
+    <a href="#reserva" class="btn">Reservar mesa</a>
+    <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" id="menuBtn">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <span class="eyebrow">Café de especialidad · Granada</span>
+        <h1>Tostamos cada semana para que tu café sepa a <em>recién hecho</em>.</h1>
+        <p>Granos de origen único, tostados en nuestro obrador del Realejo. Desayunos caseros, brunch los fines de semana y café para llevar.</p>
+        <div class="hero-actions">
+          <a href="#reserva" class="btn">Reservar mesa</a>
+          <a href="#carta" class="btn ghost">Ver la carta</a>
+        </div>
+      </div>
+      <div class="hero-art reveal" role="img" aria-label="Ilustración de una taza de café">
+        <div class="cup">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2c0 1 1 1 1 2s-1 1-1 2M10 2c0 1 1 1 1 2s-1 1-1 2M14 2c0 1 1 1 1 2s-1 1-1 2"/></svg>
+        </div>
+        <div class="badge">
+          <strong>4,9</strong>
+          <span>valoración media<br>de nuestros clientes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="nosotros">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Del grano a la taza, sin atajos</h2>
+        <p>Somos un pequeño tostadero de barrio. Elegimos el café, lo tostamos y te lo servimos nosotros mismos.</p>
+      </div>
+      <div class="features">
+        <article class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+          <h3>Origen único</h3>
+          <p>Trabajamos con fincas de Etiopía, Colombia y Guatemala. Sabes de dónde viene cada taza.</p>
+        </article>
+        <article class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14 0-4 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5Z"/></svg></div>
+          <h3>Tueste semanal</h3>
+          <p>Tostamos en pequeños lotes cada lunes. Nunca servimos café con más de tres semanas.</p>
+        </article>
+        <article class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18M5 11V7a7 7 0 0 1 14 0v4M4 11l1.5 9h13L20 11"/></svg></div>
+          <h3>Cocina casera</h3>
+          <p>Pan de masa madre, bizcochos del día y tostadas con producto local de la Vega.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="carta">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Nuestra carta</h2>
+        <p>Precios con IVA incluido. Pregunta por el café de origen de la semana.</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Categorías de la carta">
+        <button class="tab" role="tab" aria-selected="true" aria-controls="m-cafe" id="t-cafe">Cafés</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="m-desayuno" id="t-desayuno">Desayunos</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="m-dulce" id="t-dulce">Dulces</button>
+      </div>
+
+      <div class="menu-list" id="m-cafe" role="tabpanel" aria-labelledby="t-cafe">
+        <div class="item"><div><h4>Espresso</h4><p>Origen de la semana</p></div><span class="price">1,60 €</span></div>
+        <div class="item"><div><h4>Flat white</h4><p>Doble ristretto y leche texturizada</p></div><span class="price">2,80 €</span></div>
+        <div class="item"><div><h4>Cappuccino</h4><p>Con cacao opcional</p></div><span class="price">2,60 €</span></div>
+        <div class="item"><div><h4>V60 filtrado</h4><p>Método manual, 300 ml</p></div><span class="price">3,50 €</span></div>
+        <div class="item"><div><h4>Cold brew</h4><p>Infusionado 18 horas</p></div><span class="price">3,20 €</span></div>
+        <div class="item"><div><h4>Chai latte</h4><p>Especias caseras</p></div><span class="price">3,00 €</span></div>
+      </div>
+
+      <div class="menu-list" id="m-desayuno" role="tabpanel" aria-labelledby="t-desayuno" hidden>
+        <div class="item"><div><h4>Tostada de tomate</h4><p>Masa madre, AOVE y tomate rallado</p></div><span class="price">3,20 €</span></div>
+        <div class="item"><div><h4>Aguacate y huevo</h4><p>Huevo poché y semillas</p></div><span class="price">6,50 €</span></div>
+        <div class="item"><div><h4>Bowl de yogur</h4><p>Granola casera y fruta de temporada</p></div><span class="price">5,50 €</span></div>
+        <div class="item"><div><h4>Brunch Nube</h4><p>Sábados y domingos, con café incluido</p></div><span class="price">14,00 €</span></div>
+      </div>
+
+      <div class="menu-list" id="m-dulce" role="tabpanel" aria-labelledby="t-dulce" hidden>
+        <div class="item"><div><h4>Bizcocho del día</h4><p>Pregunta en barra</p></div><span class="price">2,80 €</span></div>
+        <div class="item"><div><h4>Cookie de chocolate</h4><p>Con sal en escamas</p></div><span class="price">2,50 €</span></div>
+        <div class="item"><div><h4>Tarta de queso</h4><p>Horneada, cremosa por dentro</p></div><span class="price">4,50 €</span></div>
+        <div class="item"><div><h4>Piononos de Santa Fe</h4><p>El clásico granadino</p></div><span class="price">1,80 €</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="opiniones">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Lo que dicen de nosotros</h2>
+        <p>Opiniones de ejemplo para esta demo.</p>
+      </div>
+      <div class="reviews">
+        <article class="card review reveal">
+          <div class="stars" aria-label="5 de 5 estrellas">★★★★★</div>
+          <blockquote>"El mejor flat white que he probado en Granada. Se nota que el café es fresco."</blockquote>
+          <cite>Cliente de ejemplo</cite>
+        </article>
+        <article class="card review reveal">
+          <div class="stars" aria-label="5 de 5 estrellas">★★★★★</div>
+          <blockquote>"Vengo a trabajar con el portátil: buen wifi, enchufes y un ambiente muy tranquilo."</blockquote>
+          <cite>Cliente de ejemplo</cite>
+        </article>
+        <article class="card review reveal">
+          <div class="stars" aria-label="5 de 5 estrellas">★★★★★</div>
+          <blockquote>"El brunch del domingo es imprescindible. Reservad, que se llena."</blockquote>
+          <cite>Cliente de ejemplo</cite>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="visitanos">
+    <div class="wrap visit">
+      <div class="card reveal">
+        <h2 style="font-size:1.8rem;margin-bottom:6px">Visítanos</h2>
+        <p style="color:var(--muted);margin-bottom:18px">Calle Inventada 12, Realejo · Granada</p>
+        <ul class="hours">
+          <li><span>Lunes a viernes</span><strong>8:00 – 19:00</strong></li>
+          <li><span>Sábado</span><strong>9:00 – 20:00</strong></li>
+          <li><span>Domingo</span><strong>9:30 – 15:00</strong></li>
+        </ul>
+      </div>
+      <div class="map reveal" role="img" aria-label="Mapa ilustrativo de la ubicación">
+        <div class="pin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reserva" style="padding-top:0">
+    <div class="wrap">
+      <div class="card reveal" style="max-width:720px;margin:0 auto">
+        <h2 style="font-size:1.8rem;margin-bottom:6px">Reserva tu mesa</h2>
+        <p style="color:var(--muted)">Te confirmamos por email en menos de una hora.</p>
+        <form id="bookForm" novalidate>
+          <div class="row">
+            <label>Nombre<input name="nombre" required autocomplete="name"></label>
+            <label>Email<input name="email" type="email" required autocomplete="email"></label>
+          </div>
+          <div class="row">
+            <label>Día<input name="dia" type="date" required></label>
+            <label>Personas
+              <select name="personas">
+                <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5+</option>
+              </select>
+            </label>
+          </div>
+          <button class="btn" type="submit">Solicitar reserva</button>
+          <p class="form-msg" id="formMsg" role="status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <span>© 2026 Tostadero Nube</span>
+      <span>Hecho a mano en Granada</span>
+    </div>
+    <p class="demo-note">Proyecto de demostración: negocio, dirección, precios y opiniones son ficticios.</p>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const nav = document.getElementById('nav');
+  const menuBtn = document.getElementById('menuBtn');
+  menuBtn.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  nav.querySelectorAll('ul a').forEach(a => a.addEventListener('click', () => {
+    nav.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }));
+
+  // Menu tabs
+  const tabs = document.querySelectorAll('.tab');
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    tabs.forEach(t => {
+      t.setAttribute('aria-selected', t === tab);
+      document.getElementById(t.getAttribute('aria-controls')).hidden = t !== tab;
+    });
+  }));
+
+  // Reveal on scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Booking form (demo: no data is sent)
+  const form = document.getElementById('bookForm');
+  const msg = document.getElementById('formMsg');
+  const dateInput = form.elements.dia;
+  dateInput.min = new Date().toISOString().split('T')[0];
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      msg.style.color = '#b42318';
+      msg.textContent = 'Revisa los campos: nombre, email válido y día son obligatorios.';
+      return;
+    }
+    msg.style.color = '#2f7a3e';
+    msg.textContent = `¡Gracias, ${form.elements.nombre.value.trim()}! Hemos recibido tu solicitud (demo: no se envía nada).`;
+    form.reset();
+  });
+</script>
+</body>
+</html>
